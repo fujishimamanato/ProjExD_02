@@ -85,7 +85,7 @@ def main():
 
         screen.blit(bg_img, [0, 0])
         screen.blit(kk_img, kk_rct)
-        
+        avx ,avy = vx*accs[min(tmr//1000,9)], vy*accs[min(tmr//1000,9)]
         bb_rct.move_ip(avx, avy)
         yoko,tate = check_dound(screen.get_rect(),bb_rct)
         if not yoko:  # 横方向にはみ出ていたら
