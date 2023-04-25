@@ -70,11 +70,14 @@ def main():
         screen.blit(kk_img, kk_rct)
         bb_rct.move_ip(vx, vy)
         yoko,tate = check_dound(screen.get_rect(),bb_rct)
-        if not yoko:
+        if not yoko:  # 横方向にはみ出ていたら
             vx *= -1
-        if not tate:
+        if not tate:  # 縦方向にはみ出ていたら
             vy *= -1
         screen.blit(bb_img, bb_rct)
+
+        if kk_rct.colliderect(bb_rct):
+            return
 
         pg.display.update()
         clock.tick(1000)
