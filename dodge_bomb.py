@@ -12,6 +12,7 @@ delta = {
         }
 
 
+
 def check_dound(scr_rct: pg.Rect, obj_rct: pg.Rect) -> tuple[bool,bool]: 
     """
     オブジェクトが画面内or画面外かを判定し、真理値タプルを返す関数
@@ -35,6 +36,16 @@ def main():
 
     kk_img = pg.image.load("ex02/fig/3.png")
     kk_img = pg.transform.rotozoom(kk_img, 0, 2.0)
+    alufa = {
+            (-1, 0): pg.transform.rotozoom(kk_img, 0, 1.0),
+            (-1, +1): pg.transform.rotozoom(kk_img, 45, 1.0),
+            (0, +1): pg.transform.rotozoom(kk_img, 90, 1.0),
+            (+1, +1): pg.transform.rotozoom(kk_img, 135, 1.0),
+            (+1, 0): pg.transform.flip(kk_img, True,False),
+            (+1, -1): pg.transform.rotozoom(kk_img, 225, 1.0),
+            (0, -1): pg.transform.rotozoom(kk_img, 270, 1.0),
+            (-1, -1): pg.transform.rotozoom(kk_img, 315, 1.0)
+            }
     kk_rct = kk_img.get_rect()
     kk_rct.center = [900, 400]
 
@@ -48,6 +59,8 @@ def main():
     bb_rct.center = x, y  # 練習４
 
     tmr = 0
+
+    accs = [a for a in range(1, 11)]
     
 
     while True:
@@ -61,6 +74,10 @@ def main():
         for k, mv in delta.items():
             if key_lst[k]:
                 kk_rct.move_ip(mv)
+                print(mv)
+                for ad,srf in alufa.items():
+                    if ad == mv:
+                        kk_img = srf
         if check_dound(screen.get_rect(),kk_rct) != (True,True):
             for k, mv in delta.items():
                 if key_lst[k]:
@@ -68,12 +85,14 @@ def main():
 
         screen.blit(bg_img, [0, 0])
         screen.blit(kk_img, kk_rct)
-        bb_rct.move_ip(vx, vy)
+        avx ,avy = vx*accs[min(tmr//1000,9)], vy*accs[min(tmr//1000,9)]
+        bb_rct.move_ip(avx, avy)
         yoko,tate = check_dound(screen.get_rect(),bb_rct)
         if not yoko:  # 横方向にはみ出ていたら
             vx *= -1
         if not tate:  # 縦方向にはみ出ていたら
             vy *= -1
+        
         screen.blit(bb_img, bb_rct)
 
         if kk_rct.colliderect(bb_rct):
