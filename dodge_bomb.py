@@ -1,10 +1,11 @@
-import time
+import time # 追加機能３
 import random
 import sys
 
 import pygame as pg
 
 # 練習４
+# 追加機能４
 delta = {
         pg.K_UP: (0, -1),
         pg.K_DOWN: (0, +1),
@@ -44,13 +45,13 @@ def main():
     # 追加機能　２
     alufa = {
             (-1, 0): pg.transform.rotozoom(kk_img, 0, 1.0),
-            (-1, +1): pg.transform.rotozoom(kk_img, 45, 1.0),
+            (-2, 0): pg.transform.rotozoom(kk_img, 0, 1.0),
             (0, +1): pg.transform.rotozoom(kk_img, 90, 1.0),
-            (+1, +1): pg.transform.rotozoom(kk_img, 135, 1.0),
+            (0, +2): pg.transform.rotozoom(kk_img, 90, 1.0),
             (+1, 0): pg.transform.flip(kk_img, True,False),
-            (+1, -1): pg.transform.rotozoom(kk_img, 225, 1.0),
+            (+2, 0): pg.transform.flip(kk_img, True,False),
             (0, -1): pg.transform.rotozoom(kk_img, 270, 1.0),
-            (-1, -1): pg.transform.rotozoom(kk_img, 315, 1.0)
+            (0, -2): pg.transform.rotozoom(kk_img, 270, 1.0)
             }
     kk_rct = kk_img.get_rect()
     kk_rct.center = [900, 400]
@@ -66,10 +67,10 @@ def main():
 
     tmr = 0
 
-    accs = [a for a in range(1, 11)]
-    fonto = pg.font.Font(None,80)
+    accs = [a for a in range(1, 11)]  # 追加機能１
+    fonto = pg.font.Font(None,80)  # 追加機能３
     txt = fonto.render("game over",
-                       True,(255,255,255))
+                       True,(255,255,255))  # 追加機能３
 
     while True:
         for event in pg.event.get():
@@ -82,8 +83,7 @@ def main():
         for k, mv in delta.items():
             if key_lst[k]:
                 kk_rct.move_ip(mv)
-                print(mv)
-                for ad,srf in alufa.items():
+                for ad,srf in alufa.items():  # 追加機能２
                     if ad == mv:
                         kk_img = srf
         if check_dound(screen.get_rect(),kk_rct) != (True,True):
