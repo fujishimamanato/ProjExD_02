@@ -9,7 +9,11 @@ delta = {
         pg.K_UP: (0, -1),
         pg.K_DOWN: (0, +1),
         pg.K_LEFT: (-1, 0),
-        pg.K_RIGHT: (+1, 0)
+        pg.K_RIGHT: (+1, 0),
+        pg.K_w: (0, -2),
+        pg.K_s: (0, +2),
+        pg.K_a: (-2, 0),
+        pg.K_d: (+2, 0)
         }
 
 
