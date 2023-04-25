@@ -1,3 +1,4 @@
+import time
 import random
 import sys
 
@@ -36,6 +37,7 @@ def main():
 
     kk_img = pg.image.load("ex02/fig/3.png")
     kk_img = pg.transform.rotozoom(kk_img, 0, 2.0)
+    # 追加機能　２
     alufa = {
             (-1, 0): pg.transform.rotozoom(kk_img, 0, 1.0),
             (-1, +1): pg.transform.rotozoom(kk_img, 45, 1.0),
@@ -61,7 +63,9 @@ def main():
     tmr = 0
 
     accs = [a for a in range(1, 11)]
-    
+    fonto = pg.font.Font(None,80)
+    txt = fonto.render("game over",
+                       True,(255,255,255))
 
     while True:
         for event in pg.event.get():
@@ -85,7 +89,7 @@ def main():
 
         screen.blit(bg_img, [0, 0])
         screen.blit(kk_img, kk_rct)
-        avx ,avy = vx*accs[min(tmr//1000,9)], vy*accs[min(tmr//1000,9)]
+        avx ,avy = vx*accs[min(tmr//1000,9)], vy*accs[min(tmr//1000,9)] # 追加機能１
         bb_rct.move_ip(avx, avy)
         yoko,tate = check_dound(screen.get_rect(),bb_rct)
         if not yoko:  # 横方向にはみ出ていたら
@@ -94,11 +98,14 @@ def main():
             vy *= -1
         
         screen.blit(bb_img, bb_rct)
-
+        if kk_rct.colliderect(bb_rct):  #追加機能３
+            screen.blit(txt,[300,200])
+        pg.display.update()
         if kk_rct.colliderect(bb_rct):
+            time.sleep(5)  # 追加機能３
             return
 
-        pg.display.update()
+        
         clock.tick(1000)
 
 if __name__ == "__main__":
